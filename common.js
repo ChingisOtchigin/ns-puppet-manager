@@ -10,6 +10,21 @@ function addBarButton(id, name, iclass, cb){
 }
 
 function openPuppetList(){
+    test_puppets = [
+        {'name' : 'test folder', 
+            'puppets' : [
+                {'name': 'test1'},
+                {'name': 'test2'}
+            ]
+        },
+        {'name' : 'test folder 2', 
+            'puppets' : [
+                {'name': 'test1'},
+                {'name': 'test2'}
+            ]
+        }
+    ];
+
     if($('#puppet_popup_outer').length !== 0){
         $('#puppet_popup_outer').css('display', 'block');
         return;
@@ -23,5 +38,15 @@ function openPuppetList(){
         e.stopPropagation();
     });
     popup_outer.append(popup_inner);
+
+    test_puppets.forEach(function(curr_folder){
+        var folder_div = $(`<div class="puppet-tab tab-folder-outer" id="${curr_folder.name.toLowerCase().replace(/ /g, '_')}_folder_outer"></div>`);
+        folder_div.append(`<div class="puppet-tab tab-folder-inner" id="${curr_folder.name.toLowerCase().replace(/ /g, '_')}_folder_inner">${curr_folder.name}</div>`)
+        curr_folder.puppets.forEach(function(curr_puppet){
+            folder_div.append(`<div class="puppet-tab tab-puppet" id="${curr_puppet.name.toLowerCase().replace(/ /g, '_')}_puppet">${curr_puppet.name}</div>`)
+        });
+        popup_inner.append(folder_div);
+    });
+
     $('body').append(popup_outer);
 }
